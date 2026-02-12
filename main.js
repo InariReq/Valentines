@@ -13,21 +13,42 @@ if (accepted !== 'yes' && window.name !== 'valentineAccepted=yes') {
 
 const image = document.getElementById('source');
 const canvas = document.getElementById('art');
+const letterModal = document.getElementById('letterModal');
+const letterToggle = document.getElementById('letterToggle');
+const closeLetter = document.getElementById('closeLetter');
 const ctx = canvas.getContext('2d');
 const offscreen = document.createElement('canvas');
 const offCtx = offscreen.getContext('2d', { willReadFrequently: true });
+
+const showLetter = () => {
+  letterModal?.classList.remove('hidden');
+};
+
+const hideLetter = () => {
+  letterModal?.classList.add('hidden');
+};
+
+letterToggle?.addEventListener('click', () => {
+  if (letterModal?.classList.contains('hidden')) {
+    showLetter();
+  } else {
+    hideLetter();
+  }
+});
+
+closeLetter?.addEventListener('click', hideLetter);
 
 const getViewport = () => {
   const vv = window.visualViewport;
   if (vv) {
     return {
-      width: Math.floor(vv.width),
-      height: Math.floor(vv.height)
+      width: Math.max(1, Math.floor(vv.width)),
+      height: Math.max(1, Math.floor(vv.height))
     };
   }
   return {
-    width: window.innerWidth,
-    height: window.innerHeight
+    width: Math.max(1, document.documentElement.clientWidth || window.innerWidth),
+    height: Math.max(1, document.documentElement.clientHeight || window.innerHeight)
   };
 };
 
@@ -134,6 +155,8 @@ const rerender = () => {
 
 image.addEventListener('load', render);
 window.addEventListener('resize', rerender);
+window.addEventListener('orientationchange', rerender);
+window.addEventListener('pageshow', rerender);
 window.visualViewport?.addEventListener('resize', rerender);
 window.visualViewport?.addEventListener('scroll', rerender);
 
