@@ -3,6 +3,7 @@ const hoursEl = document.getElementById('hours');
 const minutesEl = document.getElementById('minutes');
 const secondsEl = document.getElementById('seconds');
 const statusEl = document.getElementById('status');
+const secretSkipEl = document.getElementById('secretSkip');
 
 let accepted = null;
 try {
@@ -27,6 +28,23 @@ const getNextValentines = (now) => {
 };
 
 const target = getNextValentines(new Date());
+
+let secretTapCount = 0;
+let secretTapTimer = null;
+
+if (secretSkipEl) {
+  secretSkipEl.addEventListener('click', () => {
+    secretTapCount += 1;
+    clearTimeout(secretTapTimer);
+    secretTapTimer = setTimeout(() => {
+      secretTapCount = 0;
+    }, 1200);
+
+    if (secretTapCount >= 3) {
+      window.location.href = 'portrait.html';
+    }
+  });
+}
 
 const tick = () => {
   const now = new Date();
