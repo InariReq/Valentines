@@ -38,9 +38,9 @@ if (secretSkipEl) {
     clearTimeout(secretTapTimer);
     secretTapTimer = setTimeout(() => {
       secretTapCount = 0;
-    }, 1200);
+    }, 1000);
 
-    if (secretTapCount >= 3) {
+    if (secretTapCount >= 10) {
       window.location.href = 'portrait.html';
     }
   });
