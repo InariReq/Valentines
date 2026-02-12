@@ -33,17 +33,24 @@ let secretTapCount = 0;
 let secretTapTimer = null;
 
 if (secretSkipEl) {
-  secretSkipEl.addEventListener('click', () => {
+  const handleSecretTap = () => {
     secretTapCount += 1;
     clearTimeout(secretTapTimer);
     secretTapTimer = setTimeout(() => {
       secretTapCount = 0;
     }, 1000);
 
-    if (secretTapCount >= 10) {
+    if (secretTapCount >= 3) {
       window.location.href = 'portrait.html';
     }
-  });
+  };
+
+  secretSkipEl.addEventListener('click', handleSecretTap);
+  secretSkipEl.addEventListener('touchstart', (event) => {
+    event.preventDefault();
+    handleSecretTap();
+  }, { passive: false });
+  secretSkipEl.addEventListener('pointerdown', handleSecretTap);
 }
 
 const tick = () => {
