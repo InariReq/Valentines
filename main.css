@@ -59,6 +59,10 @@ body {
     1rem
     max(1rem, env(safe-area-inset-bottom));
   background: rgba(8, 3, 8, 0.75);
+  overflow-x: auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .letter-modal.hidden {
@@ -67,12 +71,17 @@ body {
 
 .letter-card {
   width: min(560px, 96vw);
+  max-height: 92vh;
+  max-height: calc(100dvh - max(1rem, env(safe-area-inset-top)) - max(1rem, env(safe-area-inset-bottom)) - 2rem);
   background: #2f0e1f;
   border: 1px solid rgba(255, 210, 228, 0.4);
   border-radius: 14px;
   padding: 1rem;
   color: #ffe6f0;
   line-height: 1.45;
+  overflow-x: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .letter-card h2 {
