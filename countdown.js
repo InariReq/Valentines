@@ -3,6 +3,7 @@ const hoursEl = document.getElementById('hours');
 const minutesEl = document.getElementById('minutes');
 const secondsEl = document.getElementById('seconds');
 const statusEl = document.getElementById('status');
+const openSurpriseEl = document.getElementById('openSurprise');
 const secretSkipEl = document.getElementById('secretSkip');
 
 let accepted = null;
@@ -28,6 +29,7 @@ const getNextValentines = (now) => {
 };
 
 const target = getNextValentines(new Date());
+let countdownComplete = false;
 
 let secretTapCount = 0;
 let secretTapTimer = null;
@@ -53,17 +55,30 @@ if (secretSkipEl) {
   secretSkipEl.addEventListener('pointerdown', handleSecretTap);
 }
 
+if (openSurpriseEl) {
+  openSurpriseEl.addEventListener('click', () => {
+    window.location.href = 'portrait.html';
+  });
+}
+
 const tick = () => {
+  if (countdownComplete) {
+    return;
+  }
+
   const now = new Date();
   const diff = target.getTime() - now.getTime();
 
   if (diff <= 0) {
+    countdownComplete = true;
     daysEl.textContent = '00';
     hoursEl.textContent = '00';
     minutesEl.textContent = '00';
     secondsEl.textContent = '00';
-    statusEl.textContent = "Happy Valentine's Day. Opening your surprise...";
-    window.location.href = 'portrait.html';
+    statusEl.textContent = "Happy Valentine's Day. Tap the button to open your surprise.";
+    if (openSurpriseEl) {
+      openSurpriseEl.hidden = false;
+    }
     return;
   }
 
